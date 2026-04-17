@@ -12,74 +12,42 @@ proyecto-apache/
 │   └── index.html
 └── web2/                # Contingut del Node 2
     └── index.html
-🚀 Fase 1 — Un sol node web
-Objectiu: Crear una pàgina web bàsica i servir-la amb un únic contenidor Apache.
+¡Perfecto! He integrado las 4 capturas que tienes en la carpeta Fotos dentro de la sección correspondiente del README.md. He usado una tabla para que los Logs y las Fotos de cada Apache queden emparejados y se vea súper profesional.
 
-Què hem fet: Hem definit un servei apache1 al fitxer docker-compose.yml utilitzant la imatge oficial httpd:latest. Hem creat una carpeta web/ amb un fitxer index.html que inclou text, imatges i un vídeo de YouTube.
+Aquí tienes el código completo del README.md listo para copiar, pegar y subir a GitHub:
 
-Configuració clau: Mapeig del port 8080:80.
+Markdown
+# Documentación Práctica: Infraestructura Web con Docker, Nginx y Apache
 
-🚀 Fase 2 — Segon node web
-Objectiu: Afegir un segon contenidor Apache i distingir quin node respon.
+He diseñado y desplegado una arquitectura web profesional utilizando contenedores, pasando de un servidor simple a un sistema robusto con balanceo de carga y gestión de caché.
 
-Què hem fet: Hem duplicat el servei al fitxer compose (apache2). Per poder distingir-los, hem creat dues carpetes separades (web1/ i web2/).
+## 📁 Estructura del Proyecto
+```plaintext
+proyecto-apache/
+├── docker-compose.yml    # Orquestación de los contenedores
+├── nginx.conf           # Configuración del Proxy y Balanceo de carga
+├── web/                 # Carpeta compartida (Volumen)
+│   ├── index.html       # Mi página web principal
+│   └── videoplayback.mp4 # Mi vídeo local
+└── Fotos/               # Capturas de pantalla para la documentación
 
-Distinció: * Node 1: Té un títol en vermell que diu "SOY APACHE 1".
+🚀 Fase 1 y 2 — Los nodos
+Objetivo: Crear dos página web básica y servirla con dos contenedor Apache.
+Qué he hecho: Definí dos servicio apache1 y apache2 en el archivo docker-compose.yml. Creé la carpeta web/ con el archivo index.html.
+Configuración clave: Mapeo del puerto 8080:80.
 
-Node 2: Té un títol en blau que diu "SOY APACHE 2".
+🚀 Fase 3 — Volumen compartido
+Objetivo: Que ambos nodos sirvan exactamente el mismo contenido.
+Qué he hecho: Configuré el docker-compose.yml para que ambos servicios apunten a la carpeta local ./web. Así, cualquier cambio en el HTML se refleja en ambos.
 
-Ports: El primer respon al port 8080 i el segon al 8081.
+🚀 Fase 4 — Proxy inverso con balanceo
+Objetivo: Añadir Nginx como punto de entrada único que distribuya las peticiones (Round Robin).
+Qué he hecho: Añadí Nginx como frontal. Eliminé los puertos públicos de los Apaches para que todo el tráfico pase obligatoriamente por el Proxy.
+Lógica de balanceo: Configuré el bloque upstream en nginx.conf. He usado un script en el HTML para detectar visualmente qué nodo responde.
 
-🚀 Fase 3 — Volum compartit
-Objectiu: Ambdós nodes serveixen exactament el mateix contingut.
-
-Què hem fet: En lloc d'apuntar a carpetes diferents, hem configurat el docker-compose.yml perquè ambdós serveis apuntin a la mateixa carpeta local ./web.
-
-Resultat: Qualsevol canvi fet al fitxer index.html es reflecteix instantàniament en ambdós servidors, garantint la consistència de les dades.
-
-🚀 Fase 4 — Proxy invers amb balanceig
-Objectiu: Afegir Nginx com a punt d'entrada únic que distribueixi les peticions (Round Robin).
-
-Què hem fet: Hem afegit un contenidor nginx que actua com a frontal. Hem eliminat l'accés públic directe als Apaches (ara usen expose en lloc de ports) perquè tot el trànsit passi obligatòriament per Nginx.
-
-Lògica de balanç: Hem configurat un bloc upstream al fitxer nginx.conf.
-
-Funcionament: En recarregar la pàgina a http://localhost:8080, Nginx alterna les peticions entre apache1 i apache2.
-
-🚀 Fase 5 — Memòria cau (Cache)
-Objectiu: Configurar el proxy cache a Nginx i verificar el seu funcionament amb capçaleres.
-
-Què hem fet: Hem definit una ruta de cache (/var/cache/nginx) i hem configurat les directives proxy_cache.
-
-Verificació (HIT/MISS): Hem afegit una capçalera personalitzada per poder veure des de l'inspector del navegador si la resposta prové del servidor real o de la memòria cau.
-
-Configuració en nginx.conf:
-
-Nginx
-add_header X-Cache-Status $upstream_cache_status;
-🛠 Problemes trobats i solucions
-Error de muntatge (Not a directory): Docker intentava muntar nginx.conf com si fos una carpeta.
-
-Solució: Esborrar la carpeta creada per error i crear el fitxer manualment abans d'executar docker compose up.
-
-Persistent Sessions: El navegador mantenia la connexió amb un sol node i no es veia el balanceig.
-
-Solució: Provar en mode incògnit o forçar la recàrrega amb Ctrl + F5.
-
-Versió de Compose obsoleta: Apareixia un avís sobre la versió del fitxer YAML.
-
-Solució: Eliminar la línia version: "3.9", ja que les versions actuals de Docker ja no la requereixen.
-
-📸 Captures de pantalla demostratives
-Nota per a l'alumne: Aquí hauries d'adjuntar les teves captures reals.
-
-Funcionament Node 1: Pantalla amb el text en vermell (localhost:8080).
-
-Funcionament Node 2: Pantalla amb el text en blau (després de fer refresh).
-
-Estat dels contenidors: Execució de docker ps mostrant els 3 contenidors corrent.
-
-Verificació de Cache: Imatge de la pestanya "Network" de l'inspector (F12) on es vegi la capçalera X-Cache-Status: HIT.
+🚀 Fase 5 — Memoria caché (Cache)
+Objetivo: Configurar el proxy caché en Nginx y verificar su funcionamiento.
+Qué he hecho: Definí la ruta de caché y las directivas proxy_cache. Añadí la cabecera X-Cache para ver el estado (HIT/MISS) desde el navegador.
 
 📜 Fitxer Docker Compose Final
 YAML
@@ -116,7 +84,6 @@ services:
 
 volumes:
   nginx_cache:
-
 
 Capturas de funcionamiento 
 
