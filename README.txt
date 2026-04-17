@@ -120,4 +120,10 @@ volumes:
 
 Capturas de funcionamiento 
 
+https://github.com/ericmorunomoya/Proyecto-Servidores/blob/main/Fotos/Apache%201-Foto.png
 
+https://github.com/ericmorunomoya/Proyecto-Servidores/blob/main/Fotos/Apache%201-Log.png
+
+https://github.com/ericmorunomoya/Proyecto-Servidores/blob/main/Fotos/Apache%202-Foto.png
+
+https://github.com/ericmorunomoya/Proyecto-Servidores/blob/main/Fotos/Apache%202-Log.png
