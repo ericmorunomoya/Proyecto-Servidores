@@ -7,8 +7,8 @@
         body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; text-align: center; }
         .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .badge { font-size: 24px; font-weight: bold; padding: 15px; border: 2px dashed #ccc; margin-bottom: 20px; border-radius: 8px; }
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        .gallery img { width: 100%; border-radius: 8px; }
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+        .gallery img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
         .video-container { margin-top: 30px; padding: 20px; background: #000; border-radius: 10px; }
         video { width: 100%; border-radius: 5px; }
     </style>
@@ -19,16 +19,17 @@
     <div class="badge" id="server-label">Detectando servidor...</div>
 
     <h1>Servidor Apache con Docker</h1>
-    <p>Este servidor utiliza un <b>volumen compartido</b>. Nginx distribuye el tráfico entre dos nodos Apache.</p>
+    <p>Este servidor utiliza un <b>volumen compartido</b> con fotos y vídeo locales.</p>
 
-    <h2>Galería de imágenes</h2>
+    <h2>Galería de imágenes locales</h2>
     <div class="gallery">
-        <img src="https://picsum.photos/300?random=1">
-        <img src="https://picsum.photos/300?random=2">
-        <img src="https://picsum.photos/300?random=3">
-        <img src="https://picsum.photos/300?random=4">
-        <img src="https://picsum.photos/300?random=5">
-        <img src="https://picsum.photos/300?random=6">
+        <img src="paisajes-de-yosemite-46208063.webp" alt="Yosemite">
+        
+        <img src="descarga.jfif" alt="Descarga 0">
+        <img src="descarga (1).jfif" alt="Descarga 1">
+        <img src="descarga (2).jfif" alt="Descarga 2">
+        <img src="descarga (3).jfif" alt="Descarga 3">
+        <img src="descarga (4).jfif" alt="Descarga 4">
     </div>
 
     <div class="video-container">
@@ -41,7 +42,7 @@
 </div>
 
 <script>
-    // Script para detectar el nodo mediante la cabecera X-Served-By
+    // Script para detectar el nodo mediante la cabecera X-Served-By enviada por Nginx
     fetch(window.location.href, { method: 'HEAD' })
     .then(response => {
         const serverInfo = response.headers.get('X-Served-By');
