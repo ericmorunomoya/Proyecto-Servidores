@@ -1,10 +1,4 @@
-version: "3.9"
-
 services:
-
-  # =========================
-  # APACHE 1
-  # =========================
   apache1:
     image: httpd:latest
     container_name: apache1
@@ -14,21 +8,15 @@ services:
       - "80"
     restart: unless-stopped
 
-  # =========================
-  # APACHE 2
-  # =========================
   apache2:
     image: httpd:latest
     container_name: apache2
     volumes:
-      - ./web:/usr/local/apache2/htdocs/ # Carpeta compartida (la misma que apache1)
+      - ./web:/usr/local/apache2/htdocs/ # Carpeta compartida
     expose:
       - "80"
     restart: unless-stopped
 
-  # =========================
-  # NGINX (PROXY + LOAD BALANCER + CACHE)
-  # =========================
   nginx:
     image: nginx:latest
     container_name: nginx-proxy
